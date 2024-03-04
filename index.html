@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
-<title>Etch A Sketch</title>
+<title>Digital scratchpad</title>
 </head>
 <body>
 
-  <h1>Digital scratchpad!</h1>
+  <h1>Digital Scratchpad!</h1>
 
   <div class="main">
     <div class="controls">
@@ -28,21 +28,30 @@
 
     <div class="controls">
       <h3>Cool features</h3>
-      <button class="opacity-btn">10% opacity</button>
+      <button class="opacity-btn">Transparentish</button>
       <button class="color-btn">???</button>
       <button class="remove-features">Disable features</button>
 
-      <h3>Select a color</h3>
+      <h3>Choose a color</h3>
       <div class="pallette">
-        <div class="color red"></div>
-        <div class="color green btn-selected"></div>
-        <div class="color yellow"></div>
-        <div class="color blue"></div>
+        <div class="color">
+          <img src="selected.svg" alt="selected" width="100%">
+        </div>
       </div>
+      <button class="small delete-clr">
+        <img src="bin.svg" alt="delete that color">
+      </button>
+
+      <label for="add-color">
+        <h4>Add a color</h4>
+        <input id="add-color" type="color"> 
+        <button class="small submit-clr">Submit</button>
+      </label>
+      
     </div>
   </div>
 
-  <h2>Scratch anything you like</h2>
+  <h2>Scratch anything you like!</h2>
 
 <script src="script.js"></script>
 </body>

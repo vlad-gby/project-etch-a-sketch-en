@@ -92,17 +92,19 @@ function paintHandler(){
   this.style.backgroundColor = mainColor;
 }
 
+
 scratchpad.addEventListener('mousedown', e => {
   const pixels = document.querySelectorAll('.pixel');
-
   pixels.forEach((pixel) => {
     pixel.addEventListener('mouseover', paintHandler);
+    pixel.addEventListener('click', paintHandler);
 
     pixel.addEventListener('mouseup', () => {
       pixels.forEach((pixel) => {
         pixel.removeEventListener('mouseover', paintHandler);
       });
     });
+    
   });
 });
 
@@ -163,42 +165,48 @@ function changingColor(element){
   element.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`
 }
 
-const redBtn = document.querySelector('.red');
-const greenBtn = document.querySelector('.green');
-const yellowBtn = document.querySelector('.yellow');
-const blueBtn = document.querySelector('.blue');
-const colorBtns = document.querySelectorAll('.color');
+// WORKING WITH COLORS
+const inputColor = document.querySelector('#add-color');
+const pallette = document.querySelector('.pallette');
+const colorSubmit = document.querySelector('.submit-clr');
+const colorDel = document.querySelector('.delete-clr');
+let colors = document.querySelectorAll('.color');
 let mainColor = 'rgb(135, 242, 28)';
 
-redBtn.addEventListener('mouseup', e =>{
-  mainColor = 'rgb(255, 0, 0)';
-  colorBtns.forEach((button) => {
-    button.classList.remove('btn-selected');
+function makeMainColor(colorBtn){
+  if(!colorBtn.classList.contains('color')) return;
+  colors.forEach(button => {
+    button.children[0].style.display = 'none';
+    button.classList.remove('selected');
   });
-  redBtn.classList.add('btn-selected')
-});
-greenBtn.addEventListener('mouseup', e =>{
-  mainColor = 'rgb(135, 242, 28)';
-  colorBtns.forEach((button) => {
-    button.classList.remove('btn-selected');
-  });
-  greenBtn.classList.add('btn-selected')
-});
-yellowBtn.addEventListener('mouseup', e =>{
-  mainColor = 'rgb(255, 255, 0)';
-  colorBtns.forEach((button) => {
-    button.classList.remove('btn-selected');
-  });
-  yellowBtn.classList.add('btn-selected')
-});
-blueBtn.addEventListener('mouseup', e =>{
-  mainColor = 'rgb(0, 0 , 255)';
-  colorBtns.forEach((button) => {
-    button.classList.remove('btn-selected');
-  });
-  blueBtn.classList.add('btn-selected')
+  mainColor = getComputedStyle(colorBtn).backgroundColor;
+
+  colorBtn.children[0].style.display = 'block';
+  colorBtn.classList.add('selected');
+}
+
+colors[0].addEventListener('mouseup', e => {
+  makeMainColor(e.target);
 });
 
+colorSubmit.addEventListener('mouseup', e => {
+  newColor = document.querySelector('.color:last-child').cloneNode(true);
+  newColor.style.backgroundColor = inputColor.value;
+  newColor.addEventListener('mouseup', e => {
+    makeMainColor(e.target);
+  });
+  
+  pallette.appendChild(newColor);
+  colors = document.querySelectorAll('.color');
+  makeMainColor(newColor);
+});
+
+colorDel.addEventListener('mouseup', e => {
+  if(!colors[1]) return;
+  document.querySelector('.selected').remove();
+  colors = document.querySelectorAll('.color');
+  makeMainColor(colors[0]);
+});
 
 
 
